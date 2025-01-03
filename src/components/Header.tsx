@@ -10,12 +10,12 @@ const Header = ({
   handleMovieFilter: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
   return (
-    <header className="w-full flex flex-col items-center justify-center gap-6 p-6 bg-gray-900 text-center shadow-md">
-      <div className="w-full max-w-4xl flex flex-col md:flex-row items-center gap-10">
+    <header className="w-full  max-w-md flex flex-col items-center justify-center gap-6 p-6 bg-gray-900 text-center shadow-md">
+      <div className="  flex flex-col md:flex-row items-center gap-10">
         <img src={Logo} alt="Muvi logo" className="w-40 md:w-48" />
         <Navbar />
       </div>
-      <form className="w-full max-w-md">
+      <form className="w-full ">
         <input
           type="text"
           name="movieFilter"

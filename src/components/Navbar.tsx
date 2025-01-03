@@ -4,15 +4,16 @@ const Navbar = () => {
   const location = useLocation();
 
   const isActive = (path: string) => location.pathname == path;
+
   const links = [
-    { path: "/", name: "Home" },
-    { path: "/favorites", name: "Favorites" },
+    { id: 1, path: "/", name: "Home" },
+    { id: 2, path: "/favorites", name: "Favorites" },
   ];
   return (
     <nav>
       <ul className="flex gap-6 text-lg">
-        {links.map((link, i) => (
-          <li key={i}>
+        {links.map((link) => (
+          <li key={link.id}>
             <Link
               to={link.path}
               className={`${
