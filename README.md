@@ -1,51 +1,37 @@
-# React + TypeScript + Vite
+# 🎥 Muvi
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Muvi** is a responsive web application built with **React** and **TypeScript** that allows users to discover and manage their favorite movies. It showcases dynamic UI updates, state management, API integration, and reusable components.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Key Features
 
-## Expanding the ESLint configuration
+- **Dynamic Movie Search**: Fuzzy search powered by **Fuse.js**.
+- **Favorites Management**: Add or remove movies from a favorites list with consistent state across pages.
+- **Responsive Design**: Fully optimized for all screen sizes.
+- **API Integration**: Fetches movie data from **The Movie Database (TMDb) API**.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+---
 
-- Configure the top-level `parserOptions` property like this:
+## 🛠️ Technologies Used
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- **React**: Component-based UI design.
+- **TypeScript**: Strongly-typed development for scalability.
+- **React Router**: Seamless navigation between pages.
+- **Tailwind**: Custom styles for a modern, responsive design.
+- **Vite**: Fast build tool for efficient development.
+
+---
+
+## 📂 Project Structure
+
+```plaintext
+src/
+├── components/         # Reusable components (Header, Footer, MovieCard)
+├── pages/              # Home and Favorites pages
+├── services/           # API logic
+├── types/              # TypeScript type definitions
+├── App.tsx             # Main application logic
+├── main.tsx            # Entry point
+└── index.css           # Global styles
 ```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
-# muvi
