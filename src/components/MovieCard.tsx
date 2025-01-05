@@ -3,9 +3,11 @@ import { Movie as MovieType } from "../types/types";
 const MovieCard = ({
   movie,
   handleFavoriteMovieClick,
+  isFavorite,
 }: {
   movie: MovieType;
-  handleFavoriteMovieClick: (id: Number) => void;
+  isFavorite: boolean;
+  handleFavoriteMovieClick: (id: number) => void;
 }) => {
   return (
     <div className="bg-gray-800 p-4 rounded-lg shadow-lg transform hover:scale-105 transition-transform max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg flex flex-col">
@@ -33,9 +35,9 @@ const MovieCard = ({
         {/* Button */}
         <button
           onClick={() => handleFavoriteMovieClick(movie.id)}
-          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition w-full sm:w-auto"
+          className="px-4 py-2 text-white rounded-md w-full sm:w-auto bg-blue-500 hover:bg-blue-600 active:bg-blue-900 transition"
         >
-          Favorite
+          {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
         </button>
       </div>
     </div>

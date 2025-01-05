@@ -1,6 +1,5 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import Fuse from "fuse.js";
 
 // Local imports
 import Header from "./components/Header";
@@ -11,28 +10,13 @@ import { getPopularMovies, searchMovies } from "./services/api";
 import { Movie } from "./types/types";
 
 function App() {
-  // State variables
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const [movies, setMovies] = useState<Movie[]>([]); // Películas populares
+  const [searchedMovies, setSearchedMovies] = useState<Movie[]>([]); // Películas buscadas
   const [error, setError] = useState<null | string>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [movieFilter, setMovieFilter] = useState<string>("");
   const [favoriteMovies, setFavoriteMovies] = useState<Movie[]>([]);
 
-  // Fuse.js configuration
-  const fuseOptions = useMemo(
-    () => ({
-      keys: ["title"],
-      threshold: 0.4,
-    }),
-    []
-  );
-
-  const fuse = useMemo(
-    () => new Fuse(movies, fuseOptions),
-    [movies, fuseOptions]
-  );
-
-  // Fetch popular movies on mount
   useEffect(() => {
     const loadPopularMovies = async () => {
       try {
@@ -51,12 +35,6 @@ function App() {
     loadPopularMovies();
   }, []);
 
-  // Filter movies based on user input
-  const filteredMovies = movieFilter
-    ? fuse.search(movieFilter).map((result) => result.item)
-    : movies;
-
-  // Handlers
   const handleMovieFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setMovieFilter(e.target.value);
@@ -64,17 +42,46 @@ function App() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const moviesSearched = await searchMovies(movieFilter);
-    setMovies(moviesSearched);
-    setMovieFilter("");
+
+    if (movieFilter.trim() === "") {
+      // If search input is empty, reset to show popular movies
+      setSearchedMovies([]);
+      return;
+    }
+
+    try {
+      const moviesSearched = await searchMovies(movieFilter);
+      setSearchedMovies(moviesSearched); // Update searched movies
+    } catch (err) {
+      console.error("Search Error:", err);
+      setError("Failed to search movies. Please try again.");
+    }
+
+    setMovieFilter(""); // Clear the search input field
   };
 
-  const handleFavoriteMovieClick = (id: Number) => {
-    const movie = movies.find((movie) => movie.id === id);
-    if (!movie) {
-      return console.error("Error adding movie to favorites");
-    }
-    setFavoriteMovies((prevMovies) => [...prevMovies, movie]);
+  const handleFavoriteMovieClick = (id: number) => {
+    setFavoriteMovies((prevMovies) => {
+      const isFavorite = prevMovies.some((favMovie) => favMovie.id === id);
+
+      if (isFavorite) {
+        // Remove from favorites
+        return prevMovies.filter((favMovie) => favMovie.id !== id);
+      } else {
+        // Find the movie in either `movies` or `searchedMovies`
+        const movie =
+          movies.find((movie) => movie.id === id) ||
+          searchedMovies.find((movie) => movie.id === id);
+
+        if (!movie) {
+          console.error(`Movie with id ${id} not found.`);
+          return prevMovies;
+        }
+
+        // Add to favorites
+        return [...prevMovies, movie];
+      }
+    });
   };
 
   return (
@@ -96,7 +103,9 @@ function App() {
               path="/"
               element={
                 <Home
-                  filteredMovies={filteredMovies}
+                  movies={movies}
+                  searchedMovies={searchedMovies}
+                  favoriteMovies={favoriteMovies}
                   handleFavoriteMovieClick={handleFavoriteMovieClick}
                 />
               }
@@ -105,7 +114,7 @@ function App() {
               path="/favorites"
               element={
                 <Favorites
-                  favoritesMovies={favoriteMovies}
+                  favoriteMovies={favoriteMovies}
                   handleFavoriteMovieClick={handleFavoriteMovieClick}
                 />
               }

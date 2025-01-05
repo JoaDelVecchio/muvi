@@ -13,6 +13,7 @@ export const searchMovies = async (query: string) => {
       query
     )}`
   );
+
   const data = await response.json();
   return data.results;
 };

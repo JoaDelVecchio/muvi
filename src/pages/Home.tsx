@@ -1,29 +1,33 @@
 import MovieCard from "../components/MovieCard";
-import { Movie as MovieType } from "../types/types";
+import { Movie as Movie } from "../types/types";
 
 const Home = ({
-  filteredMovies,
+  movies,
+  searchedMovies,
+  favoriteMovies,
   handleFavoriteMovieClick,
 }: {
-  filteredMovies: MovieType[];
-  handleFavoriteMovieClick: (id: Number) => void;
+  movies: Movie[];
+  searchedMovies: Movie[];
+  favoriteMovies: Movie[];
+  handleFavoriteMovieClick: (id: number) => void;
 }) => {
+  const moviesToDisplay = searchedMovies.length > 0 ? searchedMovies : movies;
+
   return (
-    <div className=" h-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-6 p-6">
-      {filteredMovies.length > 0 ? (
-        filteredMovies.map((movie) => (
+    <div className="h-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+      {moviesToDisplay.map((movie) => {
+        const isFavorite = favoriteMovies.some((fav) => fav.id === movie.id);
+
+        return (
           <MovieCard
             key={movie.id}
             movie={movie}
+            isFavorite={isFavorite}
             handleFavoriteMovieClick={handleFavoriteMovieClick}
           />
-        ))
-      ) : (
-        <p className="text-center text-gray-400 col-span-full">
-          No recent movies found with that title. Press search to browse through
-          all movies.
-        </p>
-      )}
+        );
+      })}
     </div>
   );
 };
