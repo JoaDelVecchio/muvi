@@ -6,26 +6,26 @@ const MovieCard = ({ movie }: { movie: MovieType }) => {
   };
 
   return (
-    <div className="bg-gray-800 p-4 rounded-lg shadow-lg transform hover:scale-105 transition-transform max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg flex flex-col items-center">
+    <div className="bg-gray-800 p-4 rounded-lg shadow-lg transform hover:scale-105 transition-transform max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg flex flex-col">
       {/* Image */}
       <div className="mb-4 w-full">
         <img
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
           alt={movie.title}
-          className="object-cover rounded-md w-full h-60 sm:h-72 md:h-80 lg:h-96"
+          className="object-cover rounded-md "
         />
       </div>
 
       {/* Content */}
-      <div className="flex flex-col items-center w-full">
+      <div className="flex flex-col flex-grow justify-between items-center w-full">
         {/* Title */}
-        <h3 className="text-lg font-semibold text-white text-center break-words mb-2">
+        <h3 className="text-lg font-semibold text-white text-center break-words mb-4">
           {movie.title}
         </h3>
 
         {/* Release Date */}
         <p className="text-gray-400 text-sm sm:text-base text-center mb-4">
-          {movie.release_date}
+          {movie.release_date.split("-")[0]}
         </p>
 
         {/* Button */}
