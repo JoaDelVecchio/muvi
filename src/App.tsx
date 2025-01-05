@@ -16,6 +16,7 @@ function App() {
   const [error, setError] = useState<null | string>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [movieFilter, setMovieFilter] = useState<string>("");
+  const [favoriteMovies, setFavoriteMovies] = useState<Movie[]>([]);
 
   // Fuse.js configuration
   const fuseOptions = useMemo(
@@ -68,6 +69,14 @@ function App() {
     setMovieFilter("");
   };
 
+  const handleFavoriteMovieClick = (id: Number) => {
+    const movie = movies.find((movie) => movie.id === id);
+    if (!movie) {
+      return console.error("Error adding movie to favorites");
+    }
+    setFavoriteMovies((prevMovies) => [...prevMovies, movie]);
+  };
+
   return (
     <div className="flex justify-between min-h-screen bg-gray-900 text-white flex-col items-center">
       <Header
@@ -85,9 +94,22 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={<Home filteredMovies={filteredMovies} />}
+              element={
+                <Home
+                  filteredMovies={filteredMovies}
+                  handleFavoriteMovieClick={handleFavoriteMovieClick}
+                />
+              }
             />
-            <Route path="/favorites" element={<Favorites />} />
+            <Route
+              path="/favorites"
+              element={
+                <Favorites
+                  favoritesMovies={favoriteMovies}
+                  handleFavoriteMovieClick={handleFavoriteMovieClick}
+                />
+              }
+            />
           </Routes>
         </main>
       )}

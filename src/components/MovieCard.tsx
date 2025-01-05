@@ -1,10 +1,12 @@
 import { Movie as MovieType } from "../types/types";
 
-const MovieCard = ({ movie }: { movie: MovieType }) => {
-  const onFavoriteClick = () => {
-    alert("clicked");
-  };
-
+const MovieCard = ({
+  movie,
+  handleFavoriteMovieClick,
+}: {
+  movie: MovieType;
+  handleFavoriteMovieClick: (id: Number) => void;
+}) => {
   return (
     <div className="bg-gray-800 p-4 rounded-lg shadow-lg transform hover:scale-105 transition-transform max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg flex flex-col">
       {/* Image */}
@@ -30,7 +32,7 @@ const MovieCard = ({ movie }: { movie: MovieType }) => {
 
         {/* Button */}
         <button
-          onClick={onFavoriteClick}
+          onClick={() => handleFavoriteMovieClick(movie.id)}
           className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition w-full sm:w-auto"
         >
           Favorite
