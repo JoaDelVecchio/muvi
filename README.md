@@ -6,10 +6,9 @@
 
 ## 🚀 Key Features
 
-- **Dynamic Movie Search**: Fuzzy search powered by **Fuse.js**.
+- **API Integration**: Fetches movie data from **The Movie Database (TMDb) API**.
 - **Favorites Management**: Add or remove movies from a favorites list with consistent state across pages.
 - **Responsive Design**: Fully optimized for all screen sizes.
-- **API Integration**: Fetches movie data from **The Movie Database (TMDb) API**.
 
 ---
 
